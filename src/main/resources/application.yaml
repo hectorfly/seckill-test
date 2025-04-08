@@ -1,0 +1,95 @@
+spring:
+  thymeleaf:
+    #关闭缓存
+    cache: false
+  #数据库设置
+  datasource:
+    password: 7JSRNRD6
+#    password: 1234
+    username: root
+    url: jdbc:mysql://localhost:3306/seckill?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
+    #5.7以上用com.mysql.cj.jdbc.Driver
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    hikari:
+      #连接池名
+      pool-name: DateHikariCP
+      #最小连接数
+      minimum-idle: 5
+      #空闲存活时间 默认6000000mm （10分钟）
+      idle-timeout: 180000
+      #最大连接数 默认就是10
+      maximum-pool-size: 10
+      #自动提交
+      auto-commit: true
+      #链接最大存活时间 30分
+      max-lifetime: 180000
+      #连接超时时间 30秒
+      connection-timeout: 30000
+      #连接测试语句
+      connection-test-query: SELECT 1
+
+  redis:
+    port: 6379
+    host: 127.0.0.1
+    #默认数据库
+    database: 0
+    #读取超时时间
+    timeout: 1000ms
+    lettuce:
+      pool:
+        #最小连接数
+        max-active: 8
+        #最大空闲连接数
+        max-idle: 200
+        #z最大阻塞时间
+        max-wait: 10000ms
+        #最小空闲连接数
+        min-idle: 5
+#    password: 123456
+
+  rabbitmq:
+    host: 192.168.116.130
+    #都是默认的guest
+    username: guest
+    password: guest
+    #虚拟主机
+    virtual-host: /
+    port: 5672
+    listener:
+      simple:
+        #最小消费者10
+        concurrency: 10
+        #最大消费者
+        max-concurrency: 10
+        #限制消费者每次处理一条数据
+        prefetch: 1
+        #启动时是否默认启动容器
+        auto-startup: true
+        #呗拒绝时是否重新进入队列
+        default-requeue-rejected: true
+
+    template:
+
+      retry:
+        #发布重试，默认重试
+        enabled: true
+        #重试时间：1000毫秒
+        initial-interval: 1000ms
+        #重试最大次数
+        max-attempts: 3
+        #重试最大间隔
+        max-interval: 10000ms
+        #每次重试的时间倍数，如果为2，第一次等1000ms 第二次2000  第三次4000 第四次8000
+        multiplier: 1
+
+
+mybatis-plus:
+  #数据返回类型别名（类名）
+  type-aliases-package: com.xb.seckilltest.pojo
+  #mapper映射文件位置
+  mapper-locations: classpath*:/mapper/*Mapper.xml
+
+#配置方法mapper接口日志级别为debug
+logging:
+  level:
+    com.xb.seckilltest.mapper: debug
